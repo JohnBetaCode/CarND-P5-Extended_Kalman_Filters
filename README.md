@@ -1,3 +1,32 @@
+<!-- 
+**********************************************************************
+https://review.udacity.com/#!/rubrics/432/view
+
+Project Specification
+Extended Kalman Filters
+
+Required Files
+    1 - Your code should compile.: Code must compile without errors with cmake and make. Given that we've made CMakeLists.txt as general as possible, it's recommended that you do not change it unless you can guarantee that your changes will still compile on any platform.
+    2 - px, py, vx, vy output coordinates must have an RMSE <= [.11, .11, 0.52, 0.52] when using the file: "obj_pose-laser-radar-synthetic-input.txt" which is the same data file the simulator uses for Dataset 1: Your algorithm will be run against Dataset 1 in the simulator which is the same as "data/obj_pose-laser-radar-synthetic-input.txt" in the repository. We'll collect the positions that your algorithm outputs and compare them to ground truth data. Your px, py, vx, and vy RMSE should be less than or equal to the values [.11, .11, 0.52, 0.52]. 
+    3 - Your Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons.: While you may be creative with your implementation, there is a well-defined set of steps that must take place in order to successfully build a Kalman Filter. As such, your project should follow the algorithm as described in the preceding lesson.
+    4 - Your Kalman Filter algorithm handles the first measurements appropriately: Your algorithm should use the first measurements to initialize the state vectors and covariance matrices.
+    5 - Your Kalman Filter algorithm first predicts then updates: Upon receiving a measurement after the first, the algorithm should predict object position to the current timestep and then update the prediction using the new measurement.
+    6 - Your Kalman Filter can handle radar and lidar measurements: Your algorithm sets up the appropriate matrices given the type of measurement and calls the correct measurement function for a given sensor type.
+
+Code Efficiency
+    7 - Your algorithm should avoid unnecessary calculations: This is mostly a "code smell" test. Your algorithm does not need to sacrifice comprehension, stability, robustness or security for speed, however it should maintain good practice with respect to calculations. Here are some things to avoid. This is not a complete list, but rather a few examples of inefficiencies:
+
+
+        * Running the exact same calculation repeatedly when you can run it once, store the value and then reuse the value later.
+        * Loops that run too many times.
+        * Creating unnecessarily complex data structures when simpler structures work equivalently.
+        * Unnecessary control flow checks.
+
+
+**********************************************************************
+-->
+
+
 # Extended Kalman Filter Project Starter Code
 Self-Driving Car Engineer Nanodegree Program
 
@@ -127,3 +156,13 @@ still be compilable with cmake and make.
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
+---
+
+> **Date:** &nbsp; 04/XX/2019  
+> **Programmer:** &nbsp;John A. Betancourt G.   
+> **Mail:** &nbsp;john.betancourt93@gmail.com  
+> **Web:** &nbsp; www.linkedin.com/in/jhon-alberto-betancourt-gonzalez-345557129 
+
+<img src="https://media.giphy.com/media/ROMuW7IsJH4uQ/giphy.gif" alt="drawing" width="400"/> 
+
+<!-- Sorry for my English -->
