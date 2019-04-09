@@ -103,3 +103,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 video_resources/
+Term_2_Simulator/
+term2_sim_linux/
+build/
+
