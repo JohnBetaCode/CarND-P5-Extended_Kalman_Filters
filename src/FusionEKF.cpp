@@ -19,12 +19,12 @@ step or update step. You will see TODO comments indicating where to put
 your code.
 
 You will need to:
-  1. initialize variables and matrices (x, F, H_laser, H_jacobian, P, etc.)
-  2. initialize the Kalman filter position vector with the first sensor 
+  1. (Done) initialize variables and matrices (x, F, H_laser, H_jacobian, P, etc.)
+  2. (Done) initialize the Kalman filter position vector with the first sensor 
      measurements
-  3. modify the F and Q matrices prior to the prediction step based on the 
+  3. (Done) modify the F and Q matrices prior to the prediction step based on the 
      elapsed time between measurements
-  4. call the update step for either the lidar or radar sensor measurement. 
+  4. (Done) call the update step for either the lidar or radar sensor measurement. 
      Because the update step for lidar and radar are slightly different, there 
      are different functions for updating lidar and radar.
 */
@@ -54,16 +54,19 @@ FusionEKF::FusionEKF() {
               0,      0,        0.09;
 
   /**
-  * TODO: (DONE)
+  * TODO: (Done)
   * initializing the FusionEKF. Setting the process 
   * and measurement noises
   */
+
+  // P_in Initial state covariance
   ekf_.P_ = MatrixXd(4, 4);
   ekf_.P_ << 1,   0,  0,    0,
              0,   1,  0,    0,
              0,   0,  1000, 0,
              0,   0,  0,    1000;
 
+  // H_in Measurement matrix
   H_laser_ << 1, 0, 0, 0,
               0, 1, 0, 0;
 
@@ -77,6 +80,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    * Initialization
    */
   if (!is_initialized_) {
+
     /** TODO: (Done)
     * Initialize the state ekf_.x_ with the first measurement.
     * Create the covariance matrix. You'll need to convert 
@@ -168,7 +172,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   // UPDATE STEP - UPDATE STEP - UPDATE STEP - UPDATE STEP - UPDATE STEP - UPDATE 
   // =============================================================================
   /**
-  * TODO:
+  * TODO: (Done)
   * - Use the sensor type to perform the update step.
   * - Update the state and covariance matrices.
   */

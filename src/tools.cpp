@@ -12,8 +12,8 @@ Tools::~Tools() {}
 VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
                               const vector<VectorXd> &ground_truth) {
   /**
-   * TODO: (Done) Calculate the RMSE here.
-   */
+  * TODO: (Done) Calculate the RMSE here.
+  */
 
   VectorXd rmse(4);
   rmse << 0,0,0,0;

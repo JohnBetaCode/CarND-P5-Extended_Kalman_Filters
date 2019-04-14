@@ -7,10 +7,10 @@ class KalmanFilter {
 
  private:
     /**
-    *   Common calculation for KF and EKF.
+    *   Common calculation for KF (Kalman Filter) and EKF (Extended Kalman Filter).
     *   @param y.
     */
-  void UpdateWithY(const Eigen::VectorXd &y);
+  void UpdateCommon(const Eigen::VectorXd &y);
 
  public:
   /**
