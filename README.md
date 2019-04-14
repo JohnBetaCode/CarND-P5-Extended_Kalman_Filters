@@ -8,18 +8,18 @@ CarND-P5-Extended_Kalman_Filters
 Required Files
     (OK) - 1 - Your code should compile.: Code must compile without errors with cmake and make. Given that we've made CMakeLists.txt as general as possible, it's recommended that you do not change it unless you can guarantee that your changes will still compile on any platform.
     
-    2 - px, py, vx, vy output coordinates must have an RMSE <= [.11, .11, 0.52, 0.52] when using the file: "obj_pose-laser-radar-synthetic-input.txt" which is the same data file the simulator uses for Dataset 1: Your algorithm will be run against Dataset 1 in the simulator which is the same as "data/obj_pose-laser-radar-synthetic-input.txt" in the repository. We'll collect the positions that your algorithm outputs and compare them to ground truth data. Your px, py, vx, and vy RMSE should be less than or equal to the values [.11, .11, 0.52, 0.52]. 
+    (OK) - 2 - px, py, vx, vy output coordinates must have an RMSE <= [.11, .11, 0.52, 0.52] when using the file: "obj_pose-laser-radar-synthetic-input.txt" which is the same data file the simulator uses for Dataset 1: Your algorithm will be run against Dataset 1 in the simulator which is the same as "data/obj_pose-laser-radar-synthetic-input.txt" in the repository. We'll collect the positions that your algorithm outputs and compare them to ground truth data. Your px, py, vx, and vy RMSE should be less than or equal to the values [.11, .11, 0.52, 0.52]. 
     
-    3 - Your Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons.: While you may be creative with your implementation, there is a well-defined set of steps that must take place in order to successfully build a Kalman Filter. As such, your project should follow the algorithm as described in the preceding lesson.
+    (OK) - 3 - Your Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons.: While you may be creative with your implementation, there is a well-defined set of steps that must take place in order to successfully build a Kalman Filter. As such, your project should follow the algorithm as described in the preceding lesson.
     
-    4 - Your Kalman Filter algorithm handles the first measurements appropriately: Your algorithm should use the first measurements to initialize the state vectors and covariance matrices.
+    (OK) - 4 - Your Kalman Filter algorithm handles the first measurements appropriately: Your algorithm should use the first measurements to initialize the state vectors and covariance matrices.
     
-    5 - Your Kalman Filter algorithm first predicts then updates: Upon receiving a measurement after the first, the algorithm should predict object position to the current timestep and then update the prediction using the new measurement.
+    (OK) - 5 - Your Kalman Filter algorithm first predicts then updates: Upon receiving a measurement after the first, the algorithm should predict object position to the current timestep and then update the prediction using the new measurement.
     
-    6 - Your Kalman Filter can handle radar and lidar measurements: Your algorithm sets up the appropriate matrices given the type of measurement and calls the correct measurement function for a given sensor type.
+    (OK) - 6 - Your Kalman Filter can handle radar and lidar measurements: Your algorithm sets up the appropriate matrices given the type of measurement and calls the correct measurement function for a given sensor type.
 
 Code Efficiency
-    7 - Your algorithm should avoid unnecessary calculations: This is mostly a "code smell" test. Your algorithm does not need to sacrifice comprehension, stability, robustness or security for speed, however it should maintain good practice with respect to calculations. Here are some things to avoid. This is not a complete list, but rather a few examples of inefficiencies:
+    (OK) - 7 - Your algorithm should avoid unnecessary calculations: This is mostly a "code smell" test. Your algorithm does not need to sacrifice comprehension, stability, robustness or security for speed, however it should maintain good practice with respect to calculations. Here are some things to avoid. This is not a complete list, but rather a few examples of inefficiencies:
 
         * Running the exact same calculation repeatedly when you can run it once, store the value and then reuse the value later.
         * Loops that run too many times.
@@ -29,45 +29,25 @@ Code Efficiency
 Suggestions to Make Your Project Stand Out!
     There are two ways we think you could make your project stand out:
 
-    1. While we're giving this project to you with starter code, you are not actually required to use it! If you think you can organize your Kalman Filter better than us, go for it! Also, this project was templatized in an object-oriented style, however it's reasonable to build a Kalman Filter in a functional style. Feel free to start from scratch with a functional algorithm!
+    (OK) - 1. While we're giving this project to you with starter code, you are not actually required to use it! If you think you can organize your Kalman Filter better than us, go for it! Also, this project was templatized in an object-oriented style, however it's reasonable to build a Kalman Filter in a functional style. Feel free to start from scratch with a functional algorithm!
         
         * Keep in mind that your code must compile. If your changes necessitate modifying CMakeLists.txt, you are responsible for ensuring that any reviewer can still compile your code given the dependencies listed earlier in the instructions - platform specific errors will not be debugged by graders.
 
-    2. There is some room for improvement with the Kalman Filter algorithm. Maybe some aspects of the algorithm could be combined? Maybe some could be skipped under certain circumstances? Maybe there are other ways to improve performance? Get creative!
+    (OK) - 2. There is some room for improvement with the Kalman Filter algorithm. Maybe some aspects of the algorithm could be combined? Maybe some could be skipped under certain circumstances? Maybe there are other ways to improve performance? Get creative!
 
-    3. Analyze what happens when you turn off radar or lidar. Which sensor type provides more accurate readings? How does fusing the two sensors' data improve the tracking results?
+    (OK) - 3. Analyze what happens when you turn off radar or lidar. Which sensor type provides more accurate readings? How does fusing the two sensors' data improve the tracking results?
 
-https://github.com/darienmt/CarND-Extended-Kalman-Filter-P1/tree/master/src
-https://github.com/harveenchadha/Udacity-CarND-Extended-Kalman-Filter
 **********************************************************************
 -->
 
 # CarND-P5-Extended_Kalman_Filters
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-<img src="writeup_files/banner.png" alt="drawing" width="700"/> 
+<img src="writeup_files/banner.png" alt="drawing" width="800"/> 
 
 ## Overview
 
-In this project I utilized a kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. The project required obtaining RMSE values that are lower than the tolerance outlined in the project rubric. 
-
----
-## Description (Rubric)
-
-
-### Results:  
-  
-<img src="writeup_files/kalman_filter_result_dataset-1.gif" alt="drawing" width="700"/>  
-<img src="writeup_files/kalman_filter_result_dataset-1.png" alt="drawing" width="700"/> 
-<img src="writeup_files/Extender_Kalman_Filter-Dataset_1_graph.png" alt="drawing" width="700"/> 
-
-[CarND-P5-Extended_Kalman_Filters-Dataset_1](https://youtu.be/9A-hHT5xxDs)  
-
-<img src="writeup_files/kalman_filter_result_dataset-2.gif" alt="drawing" width="700"/>  
-<img src="writeup_files/kalman_filter_result_dataset-2.png" alt="drawing" width="700"/>  
-<img src="writeup_files/Extender_Kalman_Filter-Dataset_2_graph.png" alt="drawing" width="700"/> 
-
-[CarND-P5-Extended_Kalman_Filters-Dataset_2](https://youtu.be/7dkAgI7CL6M)
+In this project I utilized a kalman filter codec in C++ to estimate the state of a moving object of interest with noisy lidar and radar measurements. The project required obtaining RMSE values that are lower than the tolerance outlined in the [project rubric](https://review.udacity.com/#!/rubrics/1962/view). 
 
 ---
 ## Overview of a Kalman Filter: Initialize, Predict, Update
@@ -80,7 +60,7 @@ To review the extended Kalman filters, let's discuss the three main steps for pr
 
 Then the prediction and update steps repeat themselves in a loop.
 
-To measure how well the Kalman filter performs, The root mean squared error is calcualted comparing the Kalman filter results with the provided ground truth.
+To measure how well the Kalman filter performs, The root mean squared error is calculated comparing the Kalman filter results with the provided ground truth.
 
 These three steps (initialize, predict, update) plus calculating RMSE encapsulate the entire extended Kalman filter project.
 
@@ -89,10 +69,10 @@ These three steps (initialize, predict, update) plus calculating RMSE encapsulat
 
 The files you need to work with are in the src folder of the github repository.
 
-* main.cpp - communicates with the Term 2 Simulator receiving data measurements, calls a function to run the Kalman filter, calls a function to calculate RMSE
-* FusionEKF.cpp - initializes the filter, calls the predict function, calls the update function
-* kalman_filter.cpp- defines the predict function, the update function for lidar, and the update function for radar
-* tools.cpp- function to calculate RMSE and the Jacobian matrix
+* [main.cpp](https://github.com/JohnBetaCode/CarND-P5-Extended_Kalman_Filters/blob/master/src/main.cpp) - communicates with the Term 2 Simulator receiving data measurements, calls a function to run the Kalman filter, calls a function to calculate RMSE
+* [FusionEKF.cpp](https://github.com/JohnBetaCode/CarND-P5-Extended_Kalman_Filters/blob/master/src/FusionEKF.cpp) - initializes the filter, calls the predict function, calls the update function
+* [kalman_filter.cpp](https://github.com/JohnBetaCode/CarND-P5-Extended_Kalman_Filters/blob/master/src/kalman_filter.cpp) - defines the predict function, the update function for lidar, and the update function for radar
+* [tools.cpp](https://github.com/JohnBetaCode/CarND-P5-Extended_Kalman_Filters/blob/master/src/tools.cpp) - function to calculate RMSE and the Jacobian matrix
 
 Here is a brief overview of what happens when the code files are executed:
 
@@ -100,6 +80,37 @@ Here is a brief overview of what happens when the code files are executed:
 * FusionEKF.cpp takes the sensor data and initializes variables and updates variables. The Kalman filter equations are not in this file. FusionEKF.cpp has a variable called ekf_, which is an instance of a KalmanFilter class. The ekf_ will hold the matrix and vector values. The ekf_ instance is called the predict and update equations.
 * The KalmanFilter class is defined in kalman_filter.cpp and kalman_filter.h, which contains functions for the prediction and update steps.
 
+---
+## Results (Rubric)
+  
+The Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons: [kalman_filter.cpp](https://github.com/JohnBetaCode/CarND-P5-Extended_Kalman_Filters/blob/master/src/kalman_filter.cpp) and [FusionEKF.cpp](https://github.com/JohnBetaCode/CarND-P5-Extended_Kalman_Filters/blob/master/src/FusionEKF.cpp)
+
+The Kalman Filter algorithm handles the first measurements appropriately and uses it to initialize the state vectors and covariance matrices: [FusionEKF.cpp](https://github.com/JohnBetaCode/CarND-P5-Extended_Kalman_Filters/blob/master/src/FusionEKF.cpp)
+from line 35 to 72 and from line 82 to 130.
+
+The Kalman Filter algorithm first predicts and then updates: Upon receiving a measurement after the first, the algorithm predicts object position to the current timestep and then update the prediction using the new measurement: [FusionEKF.cpp](https://github.com/JohnBetaCode/CarND-P5-Extended_Kalman_Filters/blob/master/src/FusionEKF.cpp) from line 143 to 169.
+
+The Kalman Filter can handle the radar and lidar measurements: the algorithm sets up the appropriate matrices given the type of measurement and calls the correct measurement function for a given sensor type: [FusionEKF.cpp](https://github.com/JohnBetaCode/CarND-P5-Extended_Kalman_Filters/blob/master/src/FusionEKF.cpp) from line 180 to 194.
+
+### Results:  
+
+The px, py, vx, vy output coordinates have an RMSE <= [.11, .11, 0.52, 0.52] when using the file: "obj_pose-laser-radar-synthetic-input.txt" which is the same data file the simulator uses for Dataset 1: the algorithm run against Dataset 1 in the simulator which is the same as "data/obj_pose-laser-radar-synthetic-input.txt" in the repository. The positions that the algorithm outputs are collected and compare them with the ground truth data. The px, py, vx, and vy RMSE is less than the values [.11, .11, 0.52, 0.52] specified in the project rubrics. 
+
+Dataset 1:
+
+<img src="writeup_files/kalman_filter_result_dataset-1.gif" alt="drawing" width="700"/>  
+<img src="writeup_files/kalman_filter_result_dataset-1.png" alt="drawing" width="700"/> 
+<img src="writeup_files/Extender_Kalman_Filter-Dataset_1_graph.png" alt="drawing" width="700"/> 
+
+[CarND-P5-Extended_Kalman_Filters-Dataset_1](https://youtu.be/9A-hHT5xxDs)  
+
+Dataset 2:
+
+<img src="writeup_files/kalman_filter_result_dataset-2.gif" alt="drawing" width="700"/>  
+<img src="writeup_files/kalman_filter_result_dataset-2.png" alt="drawing" width="700"/>  
+<img src="writeup_files/Extender_Kalman_Filter-Dataset_2_graph.png" alt="drawing" width="700"/> 
+
+[CarND-P5-Extended_Kalman_Filters-Dataset_2](https://youtu.be/7dkAgI7CL6M)
 
 ---
 ## Dependencies
@@ -163,11 +174,7 @@ OUTPUT: values provided by the c++ program to the simulator
     ```
     clear && python3 CarND-P5-Extended_Kalman_Filters.py
     ```
-Yes, I know, making
-s horrible, I'm a bad person but too lazy
- every time that I changed something i
-python code also run everything for you.
-
+Yes, I know, making a build with a python script is horrible, I'm a bad person but too lazy as well to write the make line every time that I changed something in my code, dont judge me. This script also run everything for you. If you want to plot the Kalman Filter's response just wait until the car finish its path, in this way the c++ code close the csv file to plot the results later with matplotlib in the python code. 
 
 ---
 ## Data File for EKF project
