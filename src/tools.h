@@ -4,6 +4,8 @@
 #include <vector>
 #include "Eigen/Dense"
 
+using namespace std;
+
 class Tools {
  public:
   /**

@@ -37,6 +37,8 @@ Suggestions to Make Your Project Stand Out!
 
     3. Analyze what happens when you turn off radar or lidar. Which sensor type provides more accurate readings? How does fusing the two sensors' data improve the tracking results?
 
+https://github.com/darienmt/CarND-Extended-Kalman-Filter-P1/tree/master/src
+https://github.com/harveenchadha/Udacity-CarND-Extended-Kalman-Filter
 **********************************************************************
 -->
 
@@ -53,10 +55,56 @@ In this project I utilized a kalman filter to estimate the state of a moving obj
 ## Description (Rubric)
 
 
+### Results:  
+  
+<img src="writeup_files/kalman_filter_result_dataset-1.gif" alt="drawing" width="700"/>  
+<img src="writeup_files/kalman_filter_result_dataset-1.png" alt="drawing" width="700"/> 
+<img src="writeup_files/Extender_Kalman_Filter-Dataset_1_graph.png" alt="drawing" width="700"/> 
+
+[CarND-P5-Extended_Kalman_Filters-Dataset_1](https://youtu.be/9A-hHT5xxDs)  
+
+<img src="writeup_files/kalman_filter_result_dataset-2.gif" alt="drawing" width="700"/>  
+<img src="writeup_files/kalman_filter_result_dataset-2.png" alt="drawing" width="700"/>  
+<img src="writeup_files/Extender_Kalman_Filter-Dataset_2_graph.png" alt="drawing" width="700"/> 
+
+[CarND-P5-Extended_Kalman_Filters-Dataset_2](https://youtu.be/7dkAgI7CL6M)
+
+---
+## Overview of a Kalman Filter: Initialize, Predict, Update
+
+To review the extended Kalman filters, let's discuss the three main steps for programming a Kalman filter:
+
+* Initializing Kalman filter variables
+* Predicting where the object is going to be after a time step Δt
+* Updating where the object is based on sensor measurements
+
+Then the prediction and update steps repeat themselves in a loop.
+
+To measure how well the Kalman filter performs, The root mean squared error is calcualted comparing the Kalman filter results with the provided ground truth.
+
+These three steps (initialize, predict, update) plus calculating RMSE encapsulate the entire extended Kalman filter project.
+
+---
+## Files in the Github src Folder:
+
+The files you need to work with are in the src folder of the github repository.
+
+* main.cpp - communicates with the Term 2 Simulator receiving data measurements, calls a function to run the Kalman filter, calls a function to calculate RMSE
+* FusionEKF.cpp - initializes the filter, calls the predict function, calls the update function
+* kalman_filter.cpp- defines the predict function, the update function for lidar, and the update function for radar
+* tools.cpp- function to calculate RMSE and the Jacobian matrix
+
+Here is a brief overview of what happens when the code files are executed:
+
+* Main.cpp reads in the data and sends a sensor measurement to FusionEKF.cpp
+* FusionEKF.cpp takes the sensor data and initializes variables and updates variables. The Kalman filter equations are not in this file. FusionEKF.cpp has a variable called ekf_, which is an instance of a KalmanFilter class. The ekf_ will hold the matrix and vector values. The ekf_ instance is called the predict and update equations.
+* The KalmanFilter class is defined in kalman_filter.cpp and kalman_filter.h, which contains functions for the prediction and update steps.
+
+
 ---
 ## Dependencies
 
-This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
+This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases).
 
 This repository includes two files that can be used to set up and install [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) for either Linux or Mac systems. For windows you can use either Docker, VMware, or even [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) to install uWebSocketIO. Please see the uWebSocketIO Starter Guide page in the classroom within the EKF Project lesson for the required version and installation scripts.
 
@@ -76,20 +124,18 @@ The program main.cpp has already been filled out, but feel free to modify it.
 
 Here is the main protocol that main.cpp uses for uWebSocketIO in communicating with the simulator.
 
-
 INPUT: values provided by the simulator to the c++ program
 
-["sensor_measurement"] => the measurement that the simulator observed (either lidar or radar)
-
+        ["sensor_measurement"] => the measurement that the simulator observed (either lidar or radar)
 
 OUTPUT: values provided by the c++ program to the simulator
 
-["estimate_x"] <= kalman filter estimated position x
-["estimate_y"] <= kalman filter estimated position y
-["rmse_x"]
-["rmse_y"]
-["rmse_vx"]
-["rmse_vy"]
+        ["estimate_x"] <= kalman filter estimated position x  
+        ["estimate_y"] <= kalman filter estimated position y  
+        ["rmse_x"]  
+        ["rmse_y"]  
+        ["rmse_vx"]  
+        ["rmse_vy"]  
 
 ---
 ## Other Important Dependencies
@@ -117,7 +163,34 @@ OUTPUT: values provided by the c++ program to the simulator
     ```
     clear && python3 CarND-P5-Extended_Kalman_Filters.py
     ```
-Yes, I know, making a build with a python script is horrible, I'm a bad person but too lazy as well to write the make line every time that I changed something in my code, dont judge me. This python code also run everything for you.
+Yes, I know, making
+s horrible, I'm a bad person but too lazy
+ every time that I changed something i
+python code also run everything for you.
+
+
+---
+## Data File for EKF project
+
+The github repo contains one data file:
+
+* obj_pose-laser-radar-synthetic-input.txt
+
+Here is a screenshot of the first data file:
+
+The simulator will be using this data file, and feed main.cpp values from it one line at a time.
+
+<img src="writeup_files/data_file.png" alt="drawing" width="800"/> 
+
+Each row represents a sensor measurement where the first column tells if the measurement comes from radar (R) or lidar (L).
+
+For a row containing radar data, the columns are: sensor_type, rho_measured, phi_measured, rhodot_measured, timestamp, x_groundtruth, y_groundtruth, vx_groundtruth, vy_groundtruth, yaw_groundtruth, yawrate_groundtruth.
+
+For a row containing lidar data, the columns are: sensor_type, x_measured, y_measured, timestamp, x_groundtruth, y_groundtruth, vx_groundtruth, vy_groundtruth, yaw_groundtruth, yawrate_groundtruth.
+
+Whereas radar has three measurements (rho, phi, rhodot), lidar has two measurements (x, y).
+
+THe code uses the measurement values and timestamp for the Kalman filter algorithm. Groundtruth, which represents the actual path the bicycle took, is for calculating root mean squared error.
 
 ---
 ## Generating Additional Data

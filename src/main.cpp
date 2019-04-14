@@ -1,6 +1,7 @@
 #include <math.h>
 #include <uWS/uWS.h>
 #include <iostream>
+#include <fstream>
 #include "json.hpp"
 #include "FusionEKF.h"
 #include "tools.h"
@@ -40,9 +41,14 @@ int main() {
   vector<VectorXd> estimations;
   vector<VectorXd> ground_truth;
 
-  h.onMessage([&fusionEKF,&tools,&estimations,&ground_truth]
+  std::ofstream kalman_csv;
+  kalman_csv.open ("Extender_Kalman_Filter-Dataset.csv");
+  kalman_csv << "ground_truth_x, ground_truth_y, ground_truth_vx, ground_truth_vy, estimate_x, estimate_y, estimate_vx, estimate_vy, rmse_x, rmse_y, rmse_vx, rmse_vy, \n";
+
+  h.onMessage([&fusionEKF, &tools, &estimations, &ground_truth, &kalman_csv]
               (uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                uWS::OpCode opCode) {
+
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
@@ -55,6 +61,7 @@ int main() {
         string event = j[0].get<string>();
         
         if (event == "telemetry") {
+
           // j[1] is the data JSON object
           string sensor_measurement = j[1]["sensor_measurement"];
           
@@ -67,12 +74,13 @@ int main() {
           string sensor_type;
           iss >> sensor_type;
 
+          // Read Laser or Radar
           if (sensor_type.compare("L") == 0) {
             meas_package.sensor_type_ = MeasurementPackage::LASER;
             meas_package.raw_measurements_ = VectorXd(2);
             float px;
             float py;
-            iss >> px;
+            iss >> px; 
             iss >> py;
             meas_package.raw_measurements_ << px, py;
             iss >> timestamp;
@@ -112,13 +120,12 @@ int main() {
 
           // Push the current estimated x,y positon from the Kalman filter's 
           //   state vector
-
           VectorXd estimate(4);
 
           double p_x = fusionEKF.ekf_.x_(0);
           double p_y = fusionEKF.ekf_.x_(1);
           double v1  = fusionEKF.ekf_.x_(2);
-          double v2 = fusionEKF.ekf_.x_(3);
+          double v2  = fusionEKF.ekf_.x_(3);
 
           estimate(0) = p_x;
           estimate(1) = p_y;
@@ -126,8 +133,25 @@ int main() {
           estimate(3) = v2;
         
           estimations.push_back(estimate);
-
           VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
+
+          if (ground_truth.size()>0){
+            int i = ground_truth.size()-1;
+            kalman_csv 
+              << ground_truth[i][0]  << "," // ground_truth_x
+              << ground_truth[i][1]  << "," // ground_truth_y
+              << ground_truth[i][2]  << "," // ground_truth_vx
+              << ground_truth[i][3]  << "," // ground_truth_vy
+              << p_x  << "," // estimate_x
+              << p_y  << "," // estimate_y
+              << v1  << "," // estimate_vx
+              << v2  << "," // estimate_vy
+              << RMSE(0)  << "," // rmse_x
+              << RMSE(1)  << "," // rmse_y
+              << RMSE(2)  << "," // rmse_vx
+              << RMSE(3)  << "," // rmse_vy
+              <<"\n";
+          }
 
           json msgJson;
           msgJson["estimate_x"] = p_x;
@@ -145,6 +169,11 @@ int main() {
       } else {
         string msg = "42[\"manual\",{}]";
         ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
+        // std::cout << estimations.size() << std::endl;
+        if (estimations.size()>450){
+          kalman_csv.close();
+        }
+        
       }
     }  // end websocket message if
 
